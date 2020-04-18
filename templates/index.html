@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Pagination</title>
+        <!-- Bootstrap core CSS -->
+        <!-- https://getbootstrap.com/docs/4.4/getting-started/introduction/ -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    
+    <body>
+        <div class="container">
+        
+            {% for thread in threads.items %}
+            
+                <div class="alert alert-primary" role="alert">
+                    {{ thread.title }}
+                </div>
+            
+            {% endfor %}
+        
+            <!-- iter_pages(left_edge=2, left_current=2, right_current=5, right_edge=2) -->
+            <!-- https://flask-sqlalchemy.palletsprojects.com/en/2.x/api/?highlight=pagination#flask_sqlalchemy.Pagination -->
+            <!-- % for page in threads.iter_pages() % -->
+            {% for page in threads.iter_pages(left_edge=3, right_edge=3, left_current=3, right_current=3) %}
+            
+                {% if page %}
+                    <a href="{{ url_for('thread', page_num=page)  }}">{{ page }}</a>
+                {% else %}
+                    ...
+                {% endif %}
+            
+            {% endfor %}
+        </div>
+    </body>
+</html>
